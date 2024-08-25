@@ -31,6 +31,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const handleClick = () => {
+    router.push('/Test');
+  };
+
   useEffect(() => {
     // Fetch the data from the API
     const fetchData = async () => {
@@ -54,8 +58,6 @@ const Dashboard = () => {
 
     fetchData();
   }, [token, router]);
-
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -64,11 +66,11 @@ const Dashboard = () => {
       <div className="w-1/15 bg-white border-r-2 py-9 text-white p-6 opacity-90">
         <h1 className="text-2xl font-bold mb-8"></h1>
         <ul>
-        <li className="mb-4 flex items-center">
-        <FaRegCircleUser size={70} className="mr-2" />
+        <li className="mb-4 ml-0">
+        <FaRegCircleUser color='black' size={60} className="" />
             <a href="#home" className="text-lg"></a>
           </li>
-          <li className="mb-4 flex items-center">
+          <li className="mb-4 mr- flex items-center">
             <FaHome color='green' size={40} className="mr-2" />
             <a href="#home" className="text-lg"></a>
           </li>
@@ -91,7 +93,7 @@ const Dashboard = () => {
       <div className="w-5/6 p-6 px-16 bg-white overflow-y-visible scrollbar-hide">
         {/* Welcome Message */}
         <div className="mb-6">
-          <h2 className="text-5xl font-semibold">Hello,<span className='text-green-600'>{user?.name}</span></h2>
+          <h2 className="text-5xl font-semibold">Hello,<span className='text-green-600'>Yasin!</span></h2>
           <h2 className="text-3xl font-semibold">Dy Patil University</h2>
           <p className="text-2xl text-gray-600">Welcome back! Here's a quick overview of your recent activity.</p>
         </div>
@@ -104,11 +106,11 @@ const Dashboard = () => {
 
         
         {/* Pending Work (Test) - Moved below Welcome Message */}
-        <div id="home" className="bg-white shadow-md rounded-lg p-6 px-4 mb-6">
+        <div id="home" className="bg-white shadow-md rounded-lg p-10  px-4 mb-6">
           <h2 className="text-2xl text-green-600 font-semibold mb-2">Pending Work</h2>
           {data.map((test, index) => (
             <div key={index} className="bg-white border-2 p-4 rounded-lg mb-4 shadow-lg">
-              <div className="flex justify-between items-center">
+              <div className="py-4 bottom-6 flex justify-between items-center">
                 <div>
                   <h3 className="font-bold text-xl text-green-600">{test.name}</h3>
                   <p className="text-black">Ch: All</p>
@@ -123,9 +125,12 @@ const Dashboard = () => {
                 
               </div>
               
-              <button className="w-full mt-4 bg-green-600 text-white text-center py-2 rounded-md">
-                Start Test
-              </button>
+              <button
+      onClick={handleClick}
+      className="w-full mt-4 bg-green-600 text-white text-center py-2 rounded-md"
+    >
+      Start Test
+    </button>
             </div>
           ))}
         </div>
