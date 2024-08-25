@@ -64,6 +64,10 @@ const Dashboard = () => {
       <div className="w-1/15 bg-white border-r-2 py-9 text-white p-6 opacity-90">
         <h1 className="text-2xl font-bold mb-8"></h1>
         <ul>
+        <li className="mb-4 flex items-center">
+        <FaRegCircleUser size={70} className="mr-2" />
+            <a href="#home" className="text-lg"></a>
+          </li>
           <li className="mb-4 flex items-center">
             <FaHome color='green' size={40} className="mr-2" />
             <a href="#home" className="text-lg"></a>
@@ -87,7 +91,6 @@ const Dashboard = () => {
       <div className="w-5/6 p-6 px-16 bg-white overflow-y-visible scrollbar-hide">
         {/* Welcome Message */}
         <div className="mb-6">
-          <FaRegCircleUser size={50} />
           <h2 className="text-5xl font-semibold">Hello,<span className='text-green-600'>{user?.name}</span></h2>
           <h2 className="text-3xl font-semibold">Dy Patil University</h2>
           <p className="text-2xl text-gray-600">Welcome back! Here's a quick overview of your recent activity.</p>

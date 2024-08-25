@@ -11,18 +11,15 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      // Admin credentials (could be stored in an environment variable for security)
       const adminUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin';
       const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'supersecretpassword';
 
       if (username === adminUsername && password === adminPassword) {
-        // Admin login logic
         localStorage.setItem('token', 'admin-token');
-        router.push('/dashboard'); // Redirect to admin dashboard
+        router.push('/dashboard');
         return;
       }
 
-      // Regular user login logic
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -34,91 +31,91 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Store the token and redirect to the dashboard
         localStorage.setItem('token', data.data.accessToken);
         router.push('/dashboard');
       } else {
         setError(data.result.responseDescription);
       }
     } catch (err) {
-      setError('Credentials Dont Exists');
+      setError('Credentials Don’t Exist');
     }
   };
 
   return (
-    <section className="bg-white">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
-          <img
-            alt=""
-            src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        </aside>
-
-        <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-          <div className="max-w-xl lg:max-w-3xl">
-            <a className="block text-blue-600" href="#">
-              <span className="sr-only">Home</span>
-              
-            </a>
-            <div className="text-center mb-6">
-              <img
-                src="1s.png" // Replace with the path to your logo
-                alt="Logo"
-                className="mx-auto h-16 w-auto" // Adjust size as needed
-              />
-            </div>
-
-            <h1 className="mt-6 text-3xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-              NavNeet TopTech Round 1
-            </h1>
-
-            <p className="mt-4 text-xl leading-relaxed text-gray-600">
-              Sign in to your account to checkout Study-Materials,Test,Progress.....
-            </p>
-
-            <div className="mt-8">
-              <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
-                <div>
-                  <label htmlFor="username" className="block px-2 text-sm font-medium text-gray-700">
-                  </label>
-                  <input
-                    id="username"
-                    type="text"
-                    placeholder="   Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="mt-1  py-3 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-0 sm:text-sm"
-                  />
+    <section>
+      <div className="grid md:h-screen md:grid-cols-2">
+        {/* Left Component */}
+        <div className="flex flex-col items-center justify-center bg-white">
+          <div className="max-w-lg px-5 py-16 text-center md:px-10 md:py-24 lg:py-32 border border-gray-300 rounded- shadow-md">
+            <h2 className="mb-8 text-3xl font-bold md:mb-12 md:text-5xl"><span className='text-green-600'>NavNeet</span> TopTech Round-1</h2>
+            <span className="flex items-center">
+              <span className="h-px flex-1 bg-black"></span>
+              <span className="shrink-0 py-4 text-lg text-green-600 font-bold px-6">Login</span>
+              <span className="h-px flex-1 bg-black"></span>
+            </span>
+            <form
+              className="mx-auto mb-4 max-w-sm pb-4"
+              name="wf-form-password"
+              method="get"
+              onSubmit={(e) => { e.preventDefault(); handleLogin(); }}
+            >
+              <div className="relative">
+                <img
+                  alt=""
+                  src="https://assets.website-files.com/6357722e2a5f19121d37f84d/6357722e2a5f190b7e37f878_EnvelopeSimple.svg"
+                  className="absolute bottom-0 left-[5%] right-auto top-[26%] inline-block"
+                />
+                <input
+                  type="text"
+                  className="mb-4 block h-9 w-full border border-black bg-[#f2f2f7] px-3 py-6 pl-14 text-sm text-[#333333]"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="relative mb-4">
+                <img
+                  alt=""
+                  src="https://assets.website-files.com/6357722e2a5f19121d37f84d/6357722e2a5f19601037f879_Lock-2.svg"
+                  className="absolute bottom-0 left-[5%] right-auto top-[26%] inline-block"
+                />
+                <input
+                  type="password"
+                  className="mb-4 block h-9 w-full border border-black bg-[#f2f2f7] px-3 py-6 pl-14 text-sm text-[#333333]"
+                  placeholder="Password (min 8 characters)"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {error && (
+                <div className="text-red-600 text-center">
+                  <p>{error}</p>
                 </div>
-                <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  </label>
-                  <input
-                    id="password"
-                    type="password"
-                    placeholder="   Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="mt-1 py-3 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-0 sm:text-sm"
-                  />
-                </div>
-                {error && (
-                  <div className="text-red-600">
-                    <p>{error}</p>
-                  </div>
-                )}
-                <button
-                  type="submit"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Login
-                </button>
-              </form>
-            </div>
+              )}
+              <button
+                type="submit"
+                className="flex items-center justify-center bg-green-600 px-8 py-4 text-center font-semibold text-white transition [box-shadow:rgb(34,_197,_94)_-8px_8px] hover:[box-shadow:rgb(34,_197,_94)_-8px_8px\]"
+              >
+                <p className="mr-6 font-bold">Login</p>
+                <svg className="h-4 w-4 flex-none" fill="currentColor" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
+                  <title>Arrow Right</title>
+                  <polygon points="16.172 9 10.101 2.929 11.515 1.515 20 10 19.293 10.707 11.515 18.485 10.101 17.071 16.172 11 0 11 0 9"></polygon>
+                </svg>
+              </button>
+            </form>
           </div>
-        </main>
+        </div>
+        {/* Right Component */}
+        <div className="flex flex-col items-center justify-center bg-[#f2f2f7]">
+          <div className="max-w-lg px-5 py-16 md:px-10 md:py-24 lg:py-32">
+            <div className="mb-6 ml-2 flex h-14 w-14 items-center justify-center bg-green-600 [box-shadow:rgb(171,_196,_245)_-8px_8px]">
+              <img src="https://assets.website-files.com/6357722e2a5f19121d37f84d/6358f5ec37c8c32b17d1c725_Vector-9.svg" alt="" className="inline-block" />
+            </div>
+            <p className="mb-8 text-3xl font-semibold text-[#647084] md:mb-12 lg:mb-16">We now accept the fact that learning is a lifelong process of keeping abreast of change. And the most pressing task is to teach people how to learn.</p>
+          </div>
+        </div>
       </div>
     </section>
   );
