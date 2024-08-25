@@ -1,16 +1,33 @@
 "use client"
 import { useEffect, useState } from 'react';
+import { AuthContextType } from '@/context/AuthContext'; // Import the type
+
 import { useAuth } from '@/context/AuthContext';
 import { FaRegCircleUser, FaStar } from "react-icons/fa6";
 import { useRouter } from 'next/navigation';
 import { FaHome, FaBell, FaBook, FaChartLine } from 'react-icons/fa'; // Importing React Icons
 
+interface QuestionPaper {
+  name: string;
+  assignedBy: string;
+  startDate: string;
+  startTime: string;
+  endDate: string;
+  endTime: string;
+  marks: number;
+  time: number;
+  questionPaperCourseDetails: CourseDetails[];
+}
+
+interface CourseDetails {
+  courseName: string;
+}
 
 const Dashboard = () => {
-  const { token, user } = useAuth(); // Assuming user data is available in AuthContext
+  const { token, user } = useAuth() as AuthContextType;
   const router = useRouter();
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<QuestionPaper[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +45,7 @@ const Dashboard = () => {
         }
         const result = await response.json();
         setData(result.baseResponse.data);
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
       } finally {
         setLoading(false);
