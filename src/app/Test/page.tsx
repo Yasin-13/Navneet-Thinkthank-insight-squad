@@ -49,7 +49,7 @@ const Test = () => {
         setQuestionData(data);
         setStartTime(Date.now());
       } catch (err) {
-        setError(err.message);
+        setError("error");
       }
     };
 
